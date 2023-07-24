@@ -118,28 +118,6 @@ void GameDraw1(){
     }
 }
 
-void GameControl1(){
-    char key = getch();
-    switch(key)
-    {
-        case'w':
-        case'W':
-            moveup();
-            break;
-        case's':
-        case'S':
-            movedown();
-            break;
-        case'a':
-        case'A':
-            moveleft();
-            break;
-        case'd':
-        case'D':
-            moveright();
-            break;
-    }
-}
 
 void moveup(){
     int i, begin;
@@ -176,6 +154,30 @@ void moveup(){
         }
     }
 }
+
+void GameControl1(){
+    char key = getch();
+    switch(key)
+    {
+        case'w':
+        case'W':
+            moveup();
+            break;
+        case's':
+        case'S':
+            movedown();
+            break;
+        case'a':
+        case'A':
+            moveleft();
+            break;
+        case'd':
+        case'D':
+            moveright();
+            break;
+    }
+}
+
 
 int judgeover() {
     int i, j;
@@ -250,6 +252,8 @@ int main() {
         } else {
             printf("Congradulations! You win.");
         }
+
+    return 0;
 }
 
 
