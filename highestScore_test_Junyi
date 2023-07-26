@@ -337,6 +337,8 @@ int main() {
 
                 // Save the new highest score to the file
                 saveHighestScore();
+            } else {
+                printf(ANSI_COLOR_BOLD ANSI_COLOR_YELLOW "Highest Score: %d\n" ANSI_COLOR_RESET, highestScore);
             }
 
             break;
