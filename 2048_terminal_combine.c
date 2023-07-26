@@ -3,6 +3,17 @@
 #include <stdbool.h>
 #include <time.h>
 
+
+#define ANSI_COLOR_RED     "\x1b[31m"  // 红色
+#define ANSI_COLOR_GREEN   "\x1b[32m"  // 绿色
+#define ANSI_COLOR_YELLOW  "\x1b[33m"  // 黄色
+#define ANSI_COLOR_RESET   "\x1b[0m"   // 重置样式
+#define ANSI_COLOR_BOLD    "\x1b[1m"   // 粗体
+#define ANSI_COLOR_UNDERLINE "\x1b[4m" // 下划线
+#define ANSI_COLOR_ITALIC   "\x1b[3m"  // 斜体
+#define ANSI_COLOR_CYAN    "\x1b[36m"  // 青色文本
+
+
 #define SIZE 4
 
 int MAX_GRID = SIZE;
@@ -12,34 +23,30 @@ int score = 0;
 
 void printMap() {
     // Print the top border
-    printf("+");
-    for (int i = 0; i < SIZE; i++) {
-        printf("----+");
-    }
-    printf("\n");
+    printf(ANSI_COLOR_CYAN "+------+------+------+------+\n");
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            printf("|");
+            printf(ANSI_COLOR_CYAN  "|");
             if (map[i][j] == 0) {
-                printf("    ");
+                printf("      ");
             } else {
-                printf("%-4d", map[i][j]);
+                // 使用 ANSI 转义序列设置数字部分的颜色和样式
+                printf(ANSI_COLOR_BOLD ANSI_COLOR_YELLOW " %-4d " ANSI_COLOR_RESET, map[i][j]);
             }
         }
-        printf("|\n");
+        printf(ANSI_COLOR_CYAN "|\n");
 
         // Print the middle border
-        printf("+");
-        for (int j = 0; j < SIZE; j++) {
-            printf("----+");
-        }
-        printf("\n");
+        printf(ANSI_COLOR_CYAN "+------+------+------+------+\n");
     }
 }
 
-void printScore() {
-    printf("Current score: %d\n\n", score);
+
+ void printScore() {
+    printf(ANSI_COLOR_BOLD ANSI_COLOR_YELLOW "Current score: " ANSI_COLOR_RESET);
+    // 使用 ANSI 转义序列设置分数部分的颜色和样式
+    printf(ANSI_COLOR_BOLD "%d" ANSI_COLOR_RESET "\n\n", score);
 }
 
 //create a random number at the empty position
@@ -230,7 +237,9 @@ void Gamejudge() {
 
 void GameControl1() {
     char key;
-    printf("next step: w/W s/S a/A d/D \n");
+    printf(ANSI_COLOR_BOLD "Next step: " ANSI_COLOR_RESET);
+    // 使用 ANSI 转义序列设置按键部分的颜色和样式
+    printf(ANSI_COLOR_CYAN "w/W s/S a/A d/D\n" ANSI_COLOR_RESET);
     scanf(" %c", &key); // Add a space before %c to consume any leading whitespace
 
     switch (key) {
@@ -261,13 +270,13 @@ void GameControl1() {
 
 int main() {
 
-    printf("Welcome to Game 2048! Would you like to play now? Y/N\n");
+    printf(ANSI_COLOR_BOLD ANSI_COLOR_YELLOW "Welcome to Game 2048!" ANSI_COLOR_RESET "\n");
+    printf(ANSI_COLOR_UNDERLINE "Would you like to play now? Y/N\n" ANSI_COLOR_RESET);
     char key;
     scanf(" %c", &key); // Add a space before %c to consume any leading whitespace
     switch (key) {
         case 'y':
         case 'Y':
-            moveup();
             break;
         case 'n':
         case 'N':
@@ -276,6 +285,7 @@ int main() {
             printf("Invalid key. Try again.\n");
     }
 
+    printf(ANSI_COLOR_ITALIC "Get ready for some fun!\n" ANSI_COLOR_RESET);
 
     // Initialize the game map
     for (int i = 0; i < SIZE; i++) {
@@ -283,7 +293,6 @@ int main() {
             map[i][j] = 0;
         }
     }
-
 
     Createnumber();
     Createnumber();
@@ -298,7 +307,9 @@ int main() {
         
         int judgeover_val = judgeover();
         if (judgeover_val == 0) {
-            printf("You lose the game.\n");
+            printf(ANSI_COLOR_RED "G" ANSI_COLOR_GREEN "a" ANSI_COLOR_YELLOW "m" ANSI_COLOR_RED "e" ANSI_COLOR_GREEN " " 
+            ANSI_COLOR_YELLOW "O" ANSI_COLOR_RED "v" ANSI_COLOR_GREEN "e" ANSI_COLOR_RED "r" ANSI_COLOR_RESET "\n");
+            printf("\n");
             break;
         } else if (judgeover_val == 2) {
             printf("Congratulations! You win.\n");
