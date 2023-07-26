@@ -78,9 +78,9 @@ void printMap() {
 
 
 void printScore() {
-    printf(ANSI_COLOR_BOLD ANSI_COLOR_YELLOW "Current score: " ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_BOLD ANSI_COLOR_CYAN "Current score: " ANSI_COLOR_RESET);
     // Use ANSI escape sequences to color and style fraction parts
-    printf(ANSI_COLOR_BOLD "%d" ANSI_COLOR_RESET "\n\n", score);
+    printf(ANSI_COLOR_BOLD ANSI_COLOR_CYAN "%d" ANSI_COLOR_RESET "\n", score);
 }
 
 //create a random number at the empty position
