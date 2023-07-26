@@ -6,14 +6,18 @@
 #include <string.h>
 
 
-#define ANSI_COLOR_RED     "\x1b[31m"  // 红色
-#define ANSI_COLOR_GREEN   "\x1b[32m"  // 绿色
-#define ANSI_COLOR_YELLOW  "\x1b[33m"  // 黄色
-#define ANSI_COLOR_RESET   "\x1b[0m"   // 重置样式
-#define ANSI_COLOR_BOLD    "\x1b[1m"   // 粗体
-#define ANSI_COLOR_UNDERLINE "\x1b[4m" // 下划线
-#define ANSI_COLOR_ITALIC   "\x1b[3m"  // 斜体
-#define ANSI_COLOR_CYAN    "\x1b[36m"  // 青色文本
+#define ANSI_COLOR_RED     "\x1b[31m"  // red
+#define ANSI_COLOR_GREEN   "\x1b[32m"  // green
+#define ANSI_COLOR_YELLOW  "\x1b[33m"  // yellow
+#define ANSI_COLOR_RESET   "\x1b[0m"   // format reset
+#define ANSI_COLOR_BOLD    "\x1b[1m"   // bold
+#define ANSI_COLOR_UNDERLINE "\x1b[4m" // underline
+#define ANSI_COLOR_ITALIC   "\x1b[3m"  // italic
+#define ANSI_COLOR_CYAN    "\x1b[36m"  // cyan
+#define ANSI_COLOR_BLUE    "\x1b[34m"  // blue
+#define ANSI_COLOR_MAGENTA "\x1b[35m"  // magenta
+
+
 
 
 #define SIZE 4
@@ -34,8 +38,35 @@ void printMap() {
             if (map[i][j] == 0) {
                 printf("      ");
             } else {
-                // 使用 ANSI 转义序列设置数字部分的颜色和样式
-                printf(ANSI_COLOR_BOLD ANSI_COLOR_YELLOW " %-4d " ANSI_COLOR_RESET, map[i][j]);
+                                switch (map[i][j]) {
+                    case 2:
+                        printf(ANSI_COLOR_BOLD ANSI_COLOR_YELLOW " %-4d " ANSI_COLOR_RESET, map[i][j]);
+                        break;
+                    case 4:
+                        printf(ANSI_COLOR_BOLD ANSI_COLOR_BLUE " %-4d " ANSI_COLOR_RESET, map[i][j]);
+                        break;
+                    case 8:
+                        printf(ANSI_COLOR_BOLD ANSI_COLOR_GREEN " %-4d " ANSI_COLOR_RESET, map[i][j]);
+                        break;
+                    case 16:
+                        printf(ANSI_COLOR_BOLD ANSI_COLOR_RED " %-4d " ANSI_COLOR_RESET, map[i][j]);
+                        break;
+                    case 32:
+                        printf(ANSI_COLOR_BOLD ANSI_COLOR_MAGENTA " %-4d " ANSI_COLOR_RESET, map[i][j]);
+                        break;
+                    case 64:
+                        printf(ANSI_COLOR_BOLD ANSI_COLOR_CYAN " %-4d " ANSI_COLOR_RESET, map[i][j]);
+                        break;
+                    case 128:
+                        printf(ANSI_COLOR_BOLD ANSI_COLOR_YELLOW " %-4d " ANSI_COLOR_RESET, map[i][j]);
+                        break;
+                    case 256:
+                        printf(ANSI_COLOR_BOLD ANSI_COLOR_BLUE " %-4d " ANSI_COLOR_RESET, map[i][j]);
+                        break;
+                    // Add more cases for other numbers if needed
+                    default:
+                        printf(ANSI_COLOR_BOLD ANSI_COLOR_GREEN " %-4d " ANSI_COLOR_RESET, map[i][j]);
+                }
             }
         }
         printf(ANSI_COLOR_CYAN "|\n");
@@ -48,7 +79,7 @@ void printMap() {
 
 void printScore() {
     printf(ANSI_COLOR_BOLD ANSI_COLOR_YELLOW "Current score: " ANSI_COLOR_RESET);
-    // 使用 ANSI 转义序列设置分数部分的颜色和样式
+    // Use ANSI escape sequences to color and style fraction parts
     printf(ANSI_COLOR_BOLD "%d" ANSI_COLOR_RESET "\n\n", score);
 }
 
@@ -302,7 +333,58 @@ void printInstructions() {
     printf("==============================\n\n");
 }
 
+void printGameOverScreen() {
+    printf(ANSI_COLOR_BOLD ANSI_COLOR_RED);
+    printf("\n"
+           "  _____                         ____                 \n"
+           " / ____|                       / __ \\                \n"
+           "| |  __  __ _ _ __ ___   ___  | |  | |_   _____ _ __ \n"
+           "| | |_ |/ _` | '_ ` _ \\ / _ \\ | |  | \\ \\ / / _ \\ '__|\n"
+           "| |__| | (_| | | | | | |  __/ | |__| |\\ V /  __/ |   \n"
+           " \\_____|\\__,_|_| |_| |_|\\___|  \\____/  \\_/ \\___|_|   \n\n"
+          );
+    printf(ANSI_COLOR_RESET);
+}
+
+void printWinScreen() {
+    printf(ANSI_COLOR_BOLD ANSI_COLOR_GREEN);
+    printf("\n"
+           " __     __          __          __         _ \n"
+           " \\ \\   / /          \\ \\        / (_)      | |\n"
+           "  \\ \\_/ /__  _   _   \\ \\  /\\  / / _ _ __  | |\n"
+           "   \\   / _ \\| | | |   \\ \\/  \\/ / | | '_ \\ |_|\n"
+           "    | | (_) | |_| |    \\  /\\  /  | | | | | _ \n"
+           "    |_|\\___/ \\__,_|     \\/  \\/   |_|_| |_||_|\n\n"
+           );
+    printf(ANSI_COLOR_RESET);
+}
+
+void printTitleScreen() {
+    printf(ANSI_COLOR_BOLD ANSI_COLOR_GREEN);
+    printf("\n"
+           " 2222     0000    44  44    8888 \n"
+           "22  22   00  00   44  44   88  88\n"
+           "   22    00  00   444444    8888 \n"
+           "  22     00  00       44   88  88\n"
+           "222222    0000        44    8888\n"
+           "\n");
+
+}
+
+void clearScreen() {
+    printf("\x1b[2J");
+    printf("\x1b[H");
+}
+
+void printGameState() {
+    clearScreen(); // Clear the screen before printing the updated grid
+    printTitleScreen();
+    printMap();
+    printScore();
+}
+
 int main() {
+    printTitleScreen();
     printf(ANSI_COLOR_BOLD ANSI_COLOR_YELLOW "Welcome to Game 2048!" ANSI_COLOR_RESET "\n");
     printf(ANSI_COLOR_UNDERLINE "Would you like to play now? Y/N/HELP\n" ANSI_COLOR_RESET);
     char input[10];   // Character array to store user input
@@ -342,18 +424,15 @@ int main() {
     while (true) {
         GameControl1();
         Gamejudge();
-        printMap();
-        printScore();
+        printGameState();
 
         int judgeover_val = judgeover();
         if (judgeover_val == 0) {
-            printf(ANSI_COLOR_BOLD ANSI_COLOR_RED "Game Over\n" ANSI_COLOR_RESET);
-
+            printGameOverScreen();
             // Check if the current score is higher than the highest score
             if (score > highestScore) {
                 highestScore = score;
                 printf(ANSI_COLOR_BOLD ANSI_COLOR_YELLOW "New Highest Score: %d\n" ANSI_COLOR_RESET, highestScore);
-
                 // Save the new highest score to the file
                 saveHighestScore();
             } else {
@@ -362,7 +441,7 @@ int main() {
 
             break;
         } else if (judgeover_val == 2) {
-            printf("Congratulations! You win.\n");
+            printWinScreen();
             break;
         }
     }
