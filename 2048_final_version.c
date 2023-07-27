@@ -272,7 +272,6 @@ void Gamejudge() {
 void GameControl1() {
     char key;
     printf(ANSI_COLOR_BOLD "Next step: " ANSI_COLOR_RESET);
-    // 使用 ANSI 转义序列设置按键部分的颜色和样式
     printf(ANSI_COLOR_CYAN "w/W s/S a/A d/D\n" ANSI_COLOR_RESET);
     scanf(" %c", &key); // Add a space before %c to consume any leading whitespace
 
