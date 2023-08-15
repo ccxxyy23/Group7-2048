@@ -368,7 +368,8 @@ void GameControl1() { //Chole
                 moveright();
                 break;
             case 'Q':
-                return;
+                printf("Exiting 2048 game...\n");
+                exit(0);
             case 'P': // Pause the game
                 printf(ANSI_COLOR_BOLD ANSI_COLOR_YELLOW "Game Paused! Press any key to continue...\n" ANSI_COLOR_RESET);
                 getchar(); // Wait for user input
